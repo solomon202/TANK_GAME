@@ -90,9 +90,12 @@ public class Display {
 		}
 //	 метод выводит все что мы хотим добавить на холст
 	 public static void render() {
+//		 цвет обьекта
 		    bufferGraphics.setColor(new Color(0xff0000ff));
-			bufferGraphics.fillOval((int) (350 + (Math.sin(delta) * 200)), 250, 100, 100);
-			delta += 0.02f;
+//		    рисуем круг 
+		bufferGraphics.fillOval((int) (350 + (Math.sin(delta) * 200)), 250, 100, 100);
+//		движение круга 
+        delta += 0.02f;
 		}
 // меняет на новую сцену на холсте 
 		public static void swapBuffers() {
