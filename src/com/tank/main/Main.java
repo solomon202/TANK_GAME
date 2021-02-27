@@ -14,7 +14,7 @@ public class Main {
 	public static void main (String []args) {
 //		создаём обьект и передаём аргументы в егометод
 //		если поле статично к нему можно обращатся через поле класа аргументы глобальные неизменяемы 
-		Display.create(800,600,"Tank", 0xff00ff00);
+		Display.create(800,600,"Tank", 0xff00ff00,3);
 //		обьект время для обновления вызыая функцию
 		Timer t = new Timer(1000 / 60, new AbstractAction() {
 //будет вызыватся 60раз в секунду

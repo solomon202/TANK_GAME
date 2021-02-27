@@ -1,9 +1,7 @@
 package com.tank.display;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
@@ -24,13 +22,14 @@ public class Display {
 	private static Graphics bufferGraphics;
 //	цвет для отчистки картинки
 	private static int clearColor;
+	private static BufferStrategy bufferStrategy;
 	
-	private static float delta = 0;
+
 	
 	
    // метод получает размеры и имя
 	
-	 public static void create(int width, int height, String title,int _clearColor) {
+	 public static void create(int width, int height, String title,int _clearColor,int numBuffers) {
 		 
    //	если поле есть то не создаём если нет создаём
 		 
@@ -77,8 +76,16 @@ public class Display {
 		bufferData = ((DataBufferInt) buffer.getRaster().getDataBuffer()).getData();
 //	получаем обект типа график	
 		bufferGraphics = buffer.getGraphics();
+		//функция сглаживание
+		 ((Graphics2D) bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 //		сохранить цвет на тот которыйбыл инцылизирован
 		clearColor =  _clearColor;
+
+//создание буферов 3 шт
+		 content.createBufferStrategy(numBuffers);
+		 //буферная стратегия вставляем буферы
+		 bufferStrategy = content.getBufferStrategy();
+
 //       поле есть 
 			created = true;
 		}
@@ -88,21 +95,37 @@ public class Display {
 //		 стереть и залить цветом
 			Arrays.fill(bufferData, clearColor);
 		}
-//	 метод выводит все что мы хотим добавить на холст
-	 public static void render() {
-//		 цвет обьекта
-		    bufferGraphics.setColor(new Color(0xff0000ff));
-//		    рисуем круг 
-		bufferGraphics.fillOval((int) (350 + (Math.sin(delta) * 200)), 250, 100, 100);
-//		движение круга 
-        delta += 0.02f;
-		}
-// меняет на новую сцену на холсте 
+// меняет на новую сцену на холсте
 		public static void swapBuffers() {
-//			создать новую графику на канвасе вытаскиваем графику из контента
-			Graphics g = content.getGraphics();
+//			вытаскиваем графику и втавляем следующию по очереди
+			Graphics g = bufferStrategy.getDrawGraphics();
 //		и	мы хотим нарисовать наш буферкартинки
 			g.drawImage(buffer, 0, 0, null);
+			//показать буфер
+			bufferStrategy.show();
 	
 	}
+//расширяет класс график
+	public static Graphics2D getGraphics() {
+		return (Graphics2D) bufferGraphics;
+	}
+//стереть окно
+	public static void destroy() {
+	 	//проверка не создано значит нечего стирать
+
+		if (!created)
+			return;
+//установить окно
+		window.dispose();
+
+	}
+
+	public static void setTitle(String title) {
+
+		window.setTitle(title);
+
+	}
+
 }
+
+
