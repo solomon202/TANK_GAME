@@ -119,7 +119,7 @@ public class Display {
 		window.dispose();
 
 	}
-
+//меняет имя окна
 	public static void setTitle(String title) {
 
 		window.setTitle(title);
