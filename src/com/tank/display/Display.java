@@ -1,14 +1,20 @@
 package com.tank.display;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
-import javax.swing.JFrame;;
+import javax.swing.JFrame;
 
-//класс поле
+import com.tank.IO.Input;
+
+//класс полотно
 public class Display {
 	
 	private static boolean created = false;
@@ -126,6 +132,9 @@ public class Display {
 
 	}
 
-}
+	public static void addInputListener(Input inputListener) {
+		window.add(inputListener);
 
+}
+}
 

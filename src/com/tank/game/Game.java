@@ -1,11 +1,13 @@
 package com.tank.game;
 
 
+
 import java.awt.Graphics2D;
 
+import com.tank.IO.Input;
 import com.tank.display.Display;
+import com.tank.graphics.TextureAtlas;
 import com.tank.utils.Time;
-
 //поток
 public class Game implements Runnable {
 
@@ -37,8 +39,11 @@ public class Game implements Runnable {
         //вытащить графику и рисовать изменения с помощью неё
         graphics = Display.getGraphics();
         input = new Input();
+//        засунули компонет в нутирь нашего дисплея 
         Display.addInputListener(input);
+//        атлас вырезаем маленькие картинки 
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
+//        игрок
         player = new Player(300, 300, 2, 3, atlas);
     }
     //старт игры сихронизированый запускается по очереди
