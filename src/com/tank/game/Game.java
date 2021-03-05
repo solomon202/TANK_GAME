@@ -33,8 +33,7 @@ public class Game implements Runnable {
     private Graphics2D			graphics;
     private Input				input;
     private TextureAtlas		atlas;
-    private SpriteSheet        sheet;
-    private Sprite             sprite;
+	private Player				player;
 
     public Game() {
         //пока не запущена
@@ -47,10 +46,8 @@ public class Game implements Runnable {
         Display.addInputListener(input);
 //        атлас вырезаем маленькие картинки 
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
-        //что вырезать
-        sheet = new SpriteSheet(atlas.cut(1 * 16, 9 * 16, 16, 16), 2, 16);
-        //и передать то что вырезали
-    	sprite = new Sprite(sheet, 1);
+        player = new Player(300, 300, 2, 3, atlas);
+       
     }
     //старт игры сихронизированый запускается по очереди
     public synchronized void start() {
@@ -92,9 +89,10 @@ public class Game implements Runnable {
         //ОЧИЩЯЕТ БУФЕР
         Display.clear();
         //спрайт принимает графический обьект
-        sprite.render(graphics, x, y);
+        player.render(graphics);
         //мы закончили рисовать нашу сцену и теперь хотим её нарисовать
         Display.swapBuffers();
+      
     }
 //потк вызывает в нутри себя методы
     public void run() {
