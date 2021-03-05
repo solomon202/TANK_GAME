@@ -6,8 +6,11 @@ import java.awt.Graphics2D;
 
 import com.tank.IO.Input;
 import com.tank.display.Display;
+import com.tank.graphics.Sprite;
+import com.tank.graphics.SpriteSheet;
 import com.tank.graphics.TextureAtlas;
 import com.tank.utils.Time;
+
 //поток
 public class Game implements Runnable {
 
@@ -30,7 +33,8 @@ public class Game implements Runnable {
     private Graphics2D			graphics;
     private Input				input;
     private TextureAtlas		atlas;
-    private Player				player;
+    private SpriteSheet        sheet;
+    private Sprite             sprite;
 
     public Game() {
         //пока не запущена
@@ -43,8 +47,10 @@ public class Game implements Runnable {
         Display.addInputListener(input);
 //        атлас вырезаем маленькие картинки 
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
-//        игрок
-        player = new Player(300, 300, 2, 3, atlas);
+        //что вырезать
+        sheet = new SpriteSheet(atlas.cut(1 * 16, 9 * 16, 16, 16), 2, 16);
+        //и передать то что вырезали
+    	sprite = new Sprite(sheet, 1);
     }
     //старт игры сихронизированый запускается по очереди
     public synchronized void start() {
@@ -85,7 +91,8 @@ public class Game implements Runnable {
     private void render() {
         //ОЧИЩЯЕТ БУФЕР
         Display.clear();
-        player.render(graphics);
+        //спрайт принимает графический обьект
+        sprite.render(graphics, x, y);
         //мы закончили рисовать нашу сцену и теперь хотим её нарисовать
         Display.swapBuffers();
     }

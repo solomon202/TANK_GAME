@@ -1,5 +1,5 @@
 package com.tank.graphics;
-
+//класс отвечает за большое полотно изображения из которого мы можем вырезать маленькие куски
 import java.awt.image.BufferedImage;
 
 import com.tank.utils.ResourceLoader;
